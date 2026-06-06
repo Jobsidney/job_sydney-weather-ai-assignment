@@ -1,59 +1,153 @@
-import { Badge } from '@/components/ui/badge'
-import { Button } from '@/components/ui/button'
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card'
-import { Skeleton } from '@/components/ui/skeleton'
+import { useState, useEffect } from 'react'
+import { WeatherNav } from '@/components/layout/WeatherNav'
+import { HeroSection } from '@/components/weather/HeroSection'
+import { AISummarySection } from '@/components/weather/AISummarySection'
+import { ForecastSection } from '@/components/weather/ForecastSection'
+import { ProInsightsSection } from '@/components/weather/ProInsightsSection'
+import { Pro14DaySection } from '@/components/weather/Pro14DaySection'
+import { LocationPicker } from '@/components/weather/LocationPicker'
+import { LocationChips } from '@/components/weather/LocationChips'
+import { UsageFooter } from '@/components/weather/UsageFooter'
+import { QueryErrorAlert } from '@/components/shared/QueryErrorAlert'
+import { useWeatherQuery } from '@/hooks/useWeatherQuery'
+import { useLocationBootstrap } from '@/hooks/useLocationBootstrap'
+import { applyWeatherBackground } from '@/lib/background-manager'
+import type { WeatherUnits } from '@/types/weather.schema'
 
 function App() {
+  const [activeTab, setActiveTab] = useState('today')
+  const [units, setUnits] = useState<WeatherUnits>('metric')
+  const [showLocationPicker, setShowLocationPicker] = useState(false)
+  const [theme, setTheme] = useState<'light' | 'dark'>(() => {
+    if (typeof window !== 'undefined') {
+      return document.documentElement.classList.contains('dark') ? 'dark' : 'light'
+    }
+    return 'light'
+  })
+
+  const {
+    location,
+    setLocation,
+    requestGeoLocation,
+    isReady,
+    isDetectingLocation,
+  } = useLocationBootstrap(units)
+
+  const toggleUnits = () => setUnits((u) => (u === 'metric' ? 'imperial' : 'metric'))
+
+  const toggleTheme = () => {
+    setTheme((t) => {
+      const next = t === 'dark' ? 'light' : 'dark'
+      document.documentElement.classList.toggle('dark', next === 'dark')
+      return next
+    })
+  }
+
+  const locationName = `${location.name}, ${location.country}`
+
+  const weatherQuery = useWeatherQuery(
+    {
+      lat: location.lat,
+      lon: location.lon,
+      units,
+      ai: true,
+    },
+    { enabled: isReady },
+  )
+
+  useEffect(() => {
+    if (weatherQuery.data?.current.condition_code) {
+      applyWeatherBackground(weatherQuery.data.current.condition_code, theme === 'dark')
+    }
+  }, [weatherQuery.data?.current.condition_code, theme])
+
   return (
-    <div className="min-h-svh bg-background">
-      <main className="mx-auto flex w-full max-w-5xl flex-col gap-6 p-4 md:p-8">
-        <header className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-          <div className="flex flex-col gap-1">
-            <Badge variant="secondary">Weather-AI</Badge>
-            <h1 className="text-2xl font-semibold tracking-tight md:text-3xl">
-              Sydney Weather Intelligence
-            </h1>
-            <p className="text-sm text-muted-foreground">
-              Tailwind v4 + shadcn/ui ready for development
-            </p>
-          </div>
-          <Button variant="outline" disabled>
-            Refresh
-          </Button>
-        </header>
+    <div className="weather-page">
+      <WeatherNav
+        activeTab={activeTab}
+        onTabChange={setActiveTab}
+        locationName={locationName}
+        countryCode={location.country}
+        units={units}
+        onUnitsToggle={toggleUnits}
+        theme={theme}
+        onThemeToggle={toggleTheme}
+        onLocationClick={() => setShowLocationPicker(true)}
+        onSearchClick={() => setShowLocationPicker(true)}
+        onGeoLocationClick={() => void requestGeoLocation()}
+        isDetectingLocation={isDetectingLocation}
+        currentCondition={weatherQuery.data?.current.condition_code}
+      />
 
-        <div className="grid gap-4 md:grid-cols-2">
-          <Card>
-            <CardHeader>
-              <CardTitle>Current conditions</CardTitle>
-              <CardDescription>Placeholder shell</CardDescription>
-            </CardHeader>
-            <CardContent className="flex flex-col gap-3">
-              <Skeleton className="h-10 w-32" />
-              <Skeleton className="h-4 w-full" />
-              <Skeleton className="h-4 w-3/4" />
-            </CardContent>
-          </Card>
+      <main>
+        {weatherQuery.error && (
+          <section className="clean-section">
+            <QueryErrorAlert
+              message={weatherQuery.error.message}
+              onRetry={() => void weatherQuery.refetch()}
+            />
+          </section>
+        )}
 
-          <Card>
-            <CardHeader>
-              <CardTitle>AI summary</CardTitle>
-              <CardDescription>Gemini insights will appear here</CardDescription>
-            </CardHeader>
-            <CardContent className="flex flex-col gap-3">
-              <Skeleton className="h-4 w-full" />
-              <Skeleton className="h-4 w-full" />
-              <Skeleton className="h-4 w-2/3" />
-            </CardContent>
-          </Card>
-        </div>
+        <HeroSection
+          data={weatherQuery.data}
+          locationName={locationName}
+          units={units}
+          isLoading={!isReady || weatherQuery.isLoading}
+        />
+
+        <section className="clean-section clean-section--chips">
+          <LocationChips activeLocation={location} onSelect={setLocation} />
+        </section>
+
+        {activeTab === 'today' && (
+          <AISummarySection
+            data={weatherQuery.data}
+            isLoading={!isReady || weatherQuery.isLoading}
+          />
+        )}
+
+        {(activeTab === 'hourly' || activeTab === '7day') &&
+          weatherQuery.data?.hourly &&
+          weatherQuery.data?.daily && (
+            <ForecastSection
+              key={activeTab}
+              hourly={weatherQuery.data.hourly}
+              daily={weatherQuery.data.daily}
+              units={units}
+              isLoading={!isReady || weatherQuery.isLoading}
+              defaultTab={activeTab === '7day' ? 'daily' : 'hourly'}
+            />
+          )}
+
+        {(activeTab === 'insights' || activeTab === 'pro') && (
+          <ProInsightsSection
+            lat={location.lat}
+            lon={location.lon}
+            units={units}
+          />
+        )}
+
+        {activeTab === 'pro' && (
+          <Pro14DaySection
+            lat={location.lat}
+            lon={location.lon}
+            units={units}
+          />
+        )}
+
+        <UsageFooter />
       </main>
+
+      {showLocationPicker && (
+        <LocationPicker
+          currentLocation={location}
+          units={units}
+          onLocationChange={setLocation}
+          onClose={() => setShowLocationPicker(false)}
+        />
+      )}
+
     </div>
   )
 }
