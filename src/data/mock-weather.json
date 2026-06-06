@@ -1,0 +1,259 @@
+{
+  "location": {
+    "lat": -33.8688,
+    "lon": 151.2093,
+    "timezone": "Australia/Sydney"
+  },
+  "current": {
+    "time": "2026-06-06T18:00:00Z",
+    "temperature": 9,
+    "condition_code": "1",
+    "icon": "https://cdn.weatherapi.com/weather/64x64/day/116.png",
+    "wind_speed": 11,
+    "wind_direction": 177,
+    "humidity": 83,
+    "uv_index": 0,
+    "feels_like": 6
+  },
+  "hourly": [
+    {
+      "time": "2026-06-06T18:00:00Z",
+      "temperature": 9,
+      "condition_code": "1",
+      "icon": "https://cdn.weatherapi.com/weather/64x64/day/116.png",
+      "precipitation_probability": 0,
+      "wind_speed": 11
+    },
+    {
+      "time": "2026-06-06T19:00:00Z",
+      "temperature": 8,
+      "condition_code": "1",
+      "icon": "https://cdn.weatherapi.com/weather/64x64/night/116.png",
+      "precipitation_probability": 0,
+      "wind_speed": 10
+    },
+    {
+      "time": "2026-06-06T20:00:00Z",
+      "temperature": 7,
+      "condition_code": "2",
+      "icon": "https://cdn.weatherapi.com/weather/64x64/night/119.png",
+      "precipitation_probability": 10,
+      "wind_speed": 9
+    },
+    {
+      "time": "2026-06-06T21:00:00Z",
+      "temperature": 6,
+      "condition_code": "2",
+      "icon": "https://cdn.weatherapi.com/weather/64x64/night/119.png",
+      "precipitation_probability": 15,
+      "wind_speed": 8
+    },
+    {
+      "time": "2026-06-06T22:00:00Z",
+      "temperature": 6,
+      "condition_code": "3",
+      "icon": "https://cdn.weatherapi.com/weather/64x64/night/122.png",
+      "precipitation_probability": 20,
+      "wind_speed": 7
+    },
+    {
+      "time": "2026-06-06T23:00:00Z",
+      "temperature": 5,
+      "condition_code": "3",
+      "icon": "https://cdn.weatherapi.com/weather/64x64/night/122.png",
+      "precipitation_probability": 25,
+      "wind_speed": 6
+    },
+    {
+      "time": "2026-06-07T00:00:00Z",
+      "temperature": 5,
+      "condition_code": "3",
+      "icon": "https://cdn.weatherapi.com/weather/64x64/night/122.png",
+      "precipitation_probability": 30,
+      "wind_speed": 5
+    },
+    {
+      "time": "2026-06-07T06:00:00Z",
+      "temperature": 8,
+      "condition_code": "2",
+      "icon": "https://cdn.weatherapi.com/weather/64x64/day/119.png",
+      "precipitation_probability": 10,
+      "wind_speed": 8
+    },
+    {
+      "time": "2026-06-07T12:00:00Z",
+      "temperature": 16,
+      "condition_code": "1",
+      "icon": "https://cdn.weatherapi.com/weather/64x64/day/116.png",
+      "precipitation_probability": 0,
+      "wind_speed": 12
+    },
+    {
+      "time": "2026-06-07T14:00:00Z",
+      "temperature": 18,
+      "condition_code": "0",
+      "icon": "https://cdn.weatherapi.com/weather/64x64/day/113.png",
+      "precipitation_probability": 0,
+      "wind_speed": 15
+    },
+    {
+      "time": "2026-06-07T18:00:00Z",
+      "temperature": 14,
+      "condition_code": "1",
+      "icon": "https://cdn.weatherapi.com/weather/64x64/day/116.png",
+      "precipitation_probability": 0,
+      "wind_speed": 10
+    },
+    {
+      "time": "2026-06-07T22:00:00Z",
+      "temperature": 10,
+      "condition_code": "2",
+      "icon": "https://cdn.weatherapi.com/weather/64x64/night/119.png",
+      "precipitation_probability": 5,
+      "wind_speed": 8
+    }
+  ],
+  "daily": [
+    {
+      "date": "2026-06-06",
+      "temp_min": 5,
+      "temp_max": 9,
+      "condition_code": "1",
+      "icon": "https://cdn.weatherapi.com/weather/64x64/day/116.png",
+      "precipitation_probability": 30,
+      "sunrise": "06:54",
+      "sunset": "17:08"
+    },
+    {
+      "date": "2026-06-07",
+      "temp_min": 5,
+      "temp_max": 18,
+      "condition_code": "1",
+      "icon": "https://cdn.weatherapi.com/weather/64x64/day/116.png",
+      "precipitation_probability": 10,
+      "sunrise": "06:54",
+      "sunset": "17:08"
+    },
+    {
+      "date": "2026-06-08",
+      "temp_min": 7,
+      "temp_max": 20,
+      "condition_code": "0",
+      "icon": "https://cdn.weatherapi.com/weather/64x64/day/113.png",
+      "precipitation_probability": 0,
+      "sunrise": "06:55",
+      "sunset": "17:08"
+    },
+    {
+      "date": "2026-06-09",
+      "temp_min": 9,
+      "temp_max": 22,
+      "condition_code": "0",
+      "icon": "https://cdn.weatherapi.com/weather/64x64/day/113.png",
+      "precipitation_probability": 0,
+      "sunrise": "06:55",
+      "sunset": "17:08"
+    },
+    {
+      "date": "2026-06-10",
+      "temp_min": 11,
+      "temp_max": 24,
+      "condition_code": "1",
+      "icon": "https://cdn.weatherapi.com/weather/64x64/day/116.png",
+      "precipitation_probability": 5,
+      "sunrise": "06:56",
+      "sunset": "17:08"
+    },
+    {
+      "date": "2026-06-11",
+      "temp_min": 13,
+      "temp_max": 25,
+      "condition_code": "2",
+      "icon": "https://cdn.weatherapi.com/weather/64x64/day/119.png",
+      "precipitation_probability": 15,
+      "sunrise": "06:56",
+      "sunset": "17:08"
+    },
+    {
+      "date": "2026-06-12",
+      "temp_min": 15,
+      "temp_max": 23,
+      "condition_code": "61",
+      "icon": "https://cdn.weatherapi.com/weather/64x64/day/296.png",
+      "precipitation_probability": 70,
+      "sunrise": "06:57",
+      "sunset": "17:08"
+    },
+    {
+      "date": "2026-06-13",
+      "temp_min": 12,
+      "temp_max": 18,
+      "condition_code": "63",
+      "icon": "https://cdn.weatherapi.com/weather/64x64/day/302.png",
+      "precipitation_probability": 85,
+      "sunrise": "06:57",
+      "sunset": "17:08"
+    },
+    {
+      "date": "2026-06-14",
+      "temp_min": 10,
+      "temp_max": 16,
+      "condition_code": "3",
+      "icon": "https://cdn.weatherapi.com/weather/64x64/day/122.png",
+      "precipitation_probability": 40,
+      "sunrise": "06:58",
+      "sunset": "17:08"
+    },
+    {
+      "date": "2026-06-15",
+      "temp_min": 8,
+      "temp_max": 19,
+      "condition_code": "1",
+      "icon": "https://cdn.weatherapi.com/weather/64x64/day/116.png",
+      "precipitation_probability": 10,
+      "sunrise": "06:58",
+      "sunset": "17:08"
+    },
+    {
+      "date": "2026-06-16",
+      "temp_min": 9,
+      "temp_max": 21,
+      "condition_code": "0",
+      "icon": "https://cdn.weatherapi.com/weather/64x64/day/113.png",
+      "precipitation_probability": 0,
+      "sunrise": "06:59",
+      "sunset": "17:08"
+    },
+    {
+      "date": "2026-06-17",
+      "temp_min": 11,
+      "temp_max": 23,
+      "condition_code": "1",
+      "icon": "https://cdn.weatherapi.com/weather/64x64/day/116.png",
+      "precipitation_probability": 5,
+      "sunrise": "06:59",
+      "sunset": "17:08"
+    },
+    {
+      "date": "2026-06-18",
+      "temp_min": 13,
+      "temp_max": 25,
+      "condition_code": "2",
+      "icon": "https://cdn.weatherapi.com/weather/64x64/day/119.png",
+      "precipitation_probability": 20,
+      "sunrise": "07:00",
+      "sunset": "17:08"
+    },
+    {
+      "date": "2026-06-19",
+      "temp_min": 14,
+      "temp_max": 26,
+      "condition_code": "0",
+      "icon": "https://cdn.weatherapi.com/weather/64x64/day/113.png",
+      "precipitation_probability": 0,
+      "sunrise": "07:00",
+      "sunset": "17:08"
+    }
+  ],
+  "ai_summary": "Today's weather in Sydney is quite cool with partly cloudy skies and temperatures reaching a maximum of 9°C. It's a typical winter day with light winds from the south. The humidity is relatively high at 83%, making it feel cooler than the actual temperature. No precipitation is expected for the remainder of today, but there's a slight chance of light showers overnight. Tomorrow will see a gradual warming trend with clearer skies and temperatures climbing to 18°C by afternoon."
+}

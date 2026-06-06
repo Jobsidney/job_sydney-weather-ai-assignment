@@ -1,121 +1,154 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
-import './App.css'
+import { useState, useEffect } from 'react'
+import { WeatherNav } from '@/components/layout/WeatherNav'
+import { HeroSection } from '@/components/weather/HeroSection'
+import { AISummarySection } from '@/components/weather/AISummarySection'
+import { ForecastSection } from '@/components/weather/ForecastSection'
+import { ProInsightsSection } from '@/components/weather/ProInsightsSection'
+import { Pro14DaySection } from '@/components/weather/Pro14DaySection'
+import { LocationPicker } from '@/components/weather/LocationPicker'
+import { LocationChips } from '@/components/weather/LocationChips'
+import { UsageFooter } from '@/components/weather/UsageFooter'
+import { QueryErrorAlert } from '@/components/shared/QueryErrorAlert'
+import { useWeatherQuery } from '@/hooks/useWeatherQuery'
+import { useLocationBootstrap } from '@/hooks/useLocationBootstrap'
+import { applyWeatherBackground } from '@/lib/background-manager'
+import type { WeatherUnits } from '@/types/weather.schema'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [activeTab, setActiveTab] = useState('today')
+  const [units, setUnits] = useState<WeatherUnits>('metric')
+  const [showLocationPicker, setShowLocationPicker] = useState(false)
+  const [theme, setTheme] = useState<'light' | 'dark'>(() => {
+    if (typeof window !== 'undefined') {
+      return document.documentElement.classList.contains('dark') ? 'dark' : 'light'
+    }
+    return 'light'
+  })
+
+  const {
+    location,
+    setLocation,
+    requestGeoLocation,
+    isReady,
+    isDetectingLocation,
+  } = useLocationBootstrap(units)
+
+  const toggleUnits = () => setUnits((u) => (u === 'metric' ? 'imperial' : 'metric'))
+
+  const toggleTheme = () => {
+    setTheme((t) => {
+      const next = t === 'dark' ? 'light' : 'dark'
+      document.documentElement.classList.toggle('dark', next === 'dark')
+      return next
+    })
+  }
+
+  const locationName = `${location.name}, ${location.country}`
+
+  const weatherQuery = useWeatherQuery(
+    {
+      lat: location.lat,
+      lon: location.lon,
+      units,
+      ai: true,
+    },
+    { enabled: isReady },
+  )
+
+  useEffect(() => {
+    if (weatherQuery.data?.current.condition_code) {
+      applyWeatherBackground(weatherQuery.data.current.condition_code, theme === 'dark')
+    }
+  }, [weatherQuery.data?.current.condition_code, theme])
 
   return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.tsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
+    <div className="weather-page">
+      <WeatherNav
+        activeTab={activeTab}
+        onTabChange={setActiveTab}
+        locationName={locationName}
+        countryCode={location.country}
+        units={units}
+        onUnitsToggle={toggleUnits}
+        theme={theme}
+        onThemeToggle={toggleTheme}
+        onLocationClick={() => setShowLocationPicker(true)}
+        onSearchClick={() => setShowLocationPicker(true)}
+        onGeoLocationClick={() => void requestGeoLocation()}
+        isDetectingLocation={isDetectingLocation}
+        currentCondition={weatherQuery.data?.current.condition_code}
+      />
 
-      <div className="ticks"></div>
+      <main>
+        {weatherQuery.error && (
+          <section className="clean-section">
+            <QueryErrorAlert
+              message={weatherQuery.error.message}
+              onRetry={() => void weatherQuery.refetch()}
+            />
+          </section>
+        )}
 
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
+        <HeroSection
+          data={weatherQuery.data}
+          locationName={locationName}
+          units={units}
+          isLoading={!isReady || weatherQuery.isLoading}
+        />
 
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
+        <section className="clean-section clean-section--chips">
+          <LocationChips activeLocation={location} onSelect={setLocation} />
+        </section>
+
+        {activeTab === 'today' && (
+          <AISummarySection
+            data={weatherQuery.data}
+            isLoading={!isReady || weatherQuery.isLoading}
+          />
+        )}
+
+        {(activeTab === 'hourly' || activeTab === '7day') &&
+          weatherQuery.data?.hourly &&
+          weatherQuery.data?.daily && (
+            <ForecastSection
+              key={activeTab}
+              hourly={weatherQuery.data.hourly}
+              daily={weatherQuery.data.daily}
+              units={units}
+              isLoading={!isReady || weatherQuery.isLoading}
+              defaultTab={activeTab === '7day' ? 'daily' : 'hourly'}
+            />
+          )}
+
+        {(activeTab === 'insights' || activeTab === 'pro') && (
+          <ProInsightsSection
+            lat={location.lat}
+            lon={location.lon}
+            units={units}
+          />
+        )}
+
+        {activeTab === 'pro' && (
+          <Pro14DaySection
+            lat={location.lat}
+            lon={location.lon}
+            units={units}
+          />
+        )}
+
+        <UsageFooter />
+      </main>
+
+      {showLocationPicker && (
+        <LocationPicker
+          currentLocation={location}
+          units={units}
+          onLocationChange={setLocation}
+          onClose={() => setShowLocationPicker(false)}
+        />
+      )}
+
+    </div>
   )
 }
 

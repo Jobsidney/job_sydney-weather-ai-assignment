@@ -15,6 +15,12 @@ dist-ssr
 .env.*
 !.env.example
 
+# Local-only: README updated during development, committed when ready
+README.md
+
+# Local-only: Cursor rules and config
+.cursor/
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

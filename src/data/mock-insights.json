@@ -1,0 +1,36 @@
+{
+  "location": {
+    "lat": -33.8688,
+    "lon": 151.2093,
+    "timezone": "Australia/Sydney"
+  },
+  "current": {
+    "time": "2026-06-06T18:00:00Z",
+    "temperature": 9,
+    "condition_code": "1",
+    "icon": "https://cdn.weatherapi.com/weather/64x64/day/116.png",
+    "wind_speed": 11,
+    "wind_direction": 177,
+    "humidity": 83,
+    "pressure": 1024,
+    "visibility": 10,
+    "uv_index": 0,
+    "feels_like": 6
+  },
+  "hourly": [],
+  "daily": [],
+  "insights": {
+    "summary": "Current weather conditions in Sydney show typical winter patterns with high humidity and moderate wind speeds. The temperature is well below the seasonal average, making it feel particularly cold due to the wind chill effect.",
+    "risks": [
+      "High humidity levels may cause discomfort and fogging of windows/glasses",
+      "Wind chill factor makes it feel 3°C colder than actual temperature",
+      "Low visibility possible during evening hours due to atmospheric conditions"
+    ],
+    "recommendations": [
+      "Dress warmly in layers to combat the wind chill effect",
+      "Keep windows slightly open for ventilation to prevent condensation buildup",
+      "Consider postponing outdoor activities until midday when temperatures rise",
+      "Use moisturizer as low humidity can cause skin dryness despite high outdoor humidity"
+    ]
+  }
+}

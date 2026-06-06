@@ -1,0 +1,21 @@
+{
+  "plan": "free",
+  "period": {
+    "start": "2026-06-01T00:00:00Z",
+    "end": "2026-06-30T23:59:59Z",
+    "requestCount": 88,
+    "aiRequestCount": 12
+  },
+  "limits": {
+    "requests": 1000,
+    "aiRequests": 100,
+    "maxDays": 7,
+    "webhooks": false,
+    "teamSeats": 1,
+    "sms": false
+  },
+  "remaining": {
+    "requests": 912,
+    "aiRequests": 88
+  }
+}
