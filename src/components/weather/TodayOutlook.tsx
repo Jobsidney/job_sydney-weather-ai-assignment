@@ -1,6 +1,6 @@
 import { Skeleton } from '@/components/ui/skeleton'
-import { formatTemperatureValue, weatherIconUrl } from '@/lib/formatters'
-import { conditionLabel } from '@/lib/conditions'
+import { WeatherConditionIcon } from '@/components/weather/WeatherConditionIcon'
+import { formatTemperatureValue } from '@/lib/formatters'
 import { buildTodayOutlook, type OutlookPeriod } from '@/lib/today-outlook'
 import type { WeatherResponse } from '@/types/weather.schema'
 
@@ -42,14 +42,13 @@ export function TodayOutlook({
   return (
     <div className="hero-right">
       <div className="hero-right__illustration">
-        <img
-          src={weatherIconUrl(data.current.icon, 128)}
-          alt={conditionLabel(data.current.condition_code)}
+        <WeatherConditionIcon
+          conditionCode={data.current.condition_code}
+          iconUrl={data.current.icon}
+          time={data.current.time}
+          size="xl"
+          animated
           className="hero-right__weather-icon"
-          width={128}
-          height={128}
-          decoding="sync"
-          loading="eager"
         />
       </div>
 
@@ -75,15 +74,13 @@ function OutlookCard({ period }: { period: OutlookPeriod }) {
       <span className="hero-outlook-card__temp">
         {formatTemperatureValue(period.temperature)}°
       </span>
-      {period.icon ? (
-        <img
-          src={period.icon}
-          alt={conditionLabel(period.conditionCode)}
-          className="hero-outlook-card__icon"
-        />
-      ) : (
-        <span className="hero-outlook-card__icon hero-outlook-card__icon--empty" />
-      )}
+      <WeatherConditionIcon
+        conditionCode={period.conditionCode}
+        iconUrl={period.icon}
+        periodLabel={period.label}
+        size="sm"
+        className="hero-outlook-card__icon"
+      />
     </div>
   )
 }

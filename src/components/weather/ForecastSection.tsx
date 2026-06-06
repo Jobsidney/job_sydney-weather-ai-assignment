@@ -2,7 +2,9 @@ import { useState } from 'react'
 import { Skeleton } from '@/components/ui/skeleton'
 import { cn } from '@/lib/utils'
 import { DailyForecastList } from '@/components/weather/DailyForecastList'
-import { formatHourLabel, formatTemperatureValue, weatherIconUrl } from '@/lib/formatters'
+import { TonightOutlook } from '@/components/weather/TonightOutlook'
+import { WeatherConditionIcon } from '@/components/weather/WeatherConditionIcon'
+import { formatHourLabel, formatTemperatureValue } from '@/lib/formatters'
 import type { DailyForecast, HourlyForecast, WeatherUnits } from '@/types/weather.schema'
 
 type ForecastSectionProps = {
@@ -84,7 +86,10 @@ export function ForecastSection({
           ))}
         </div>
       ) : (
-        <DailyForecastList days={visibleDaily} />
+        <div className="forecast-daily-stack">
+          <TonightOutlook hourly={hourly} daily={daily} units={units} />
+          <DailyForecastList days={visibleDaily} units={units} />
+        </div>
       )}
     </section>
   )
@@ -100,12 +105,12 @@ function HourlyCard({
   return (
     <div className="forecast-item">
       <span className="forecast-time">{formatHourLabel(hour.time)}</span>
-      <img
-        src={weatherIconUrl(hour.icon, 64)}
-        alt=""
+      <WeatherConditionIcon
+        conditionCode={hour.condition_code}
+        iconUrl={hour.icon}
+        time={hour.time}
+        size="sm"
         className="forecast-icon"
-        width={32}
-        height={32}
       />
       <span className="forecast-temp">
         {formatTemperatureValue(hour.temperature)}

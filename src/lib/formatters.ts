@@ -104,6 +104,17 @@ export function formatForecastRowDate(dateStr: string): string {
   return `${dayMonth}, ${weekday}`
 }
 
+export function formatPressure(value?: number): string {
+  return value != null ? `${Math.round(value)} mb` : '--'
+}
+
+export function formatVisibility(value?: number, units: WeatherUnits = 'metric'): string {
+  if (value == null) return '--'
+  return units === 'imperial'
+    ? `${Math.round(value * 0.621371)} mi`
+    : `${Math.round(value)} km`
+}
+
 export function formatUpdatedAt(iso?: string): string {
   if (!iso) return ''
   return new Date(iso).toLocaleTimeString(undefined, {
