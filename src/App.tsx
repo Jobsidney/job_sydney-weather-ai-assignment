@@ -6,7 +6,7 @@ import { ForecastSection } from '@/components/weather/ForecastSection'
 import { ProInsightsSection } from '@/components/weather/ProInsightsSection'
 import { Pro14DaySection } from '@/components/weather/Pro14DaySection'
 import { LocationPicker } from '@/components/weather/LocationPicker'
-import { LocationChips } from '@/components/weather/LocationChips'
+import { PopularCitiesBar } from '@/components/weather/PopularCitiesBar'
 import { UsageFooter } from '@/components/weather/UsageFooter'
 import { QueryErrorAlert } from '@/components/shared/QueryErrorAlert'
 import { useWeatherQuery } from '@/hooks/useWeatherQuery'
@@ -97,13 +97,18 @@ function App() {
         />
 
         <section className="clean-section clean-section--chips">
-          <LocationChips activeLocation={location} onSelect={setLocation} />
+          <PopularCitiesBar
+            activeLocation={location}
+            units={units}
+            onSelect={setLocation}
+          />
         </section>
 
         {activeTab === 'today' && (
           <AISummarySection
             data={weatherQuery.data}
             isLoading={!isReady || weatherQuery.isLoading}
+            onRetry={() => void weatherQuery.refetch()}
           />
         )}
 
@@ -120,11 +125,12 @@ function App() {
             />
           )}
 
-        {(activeTab === 'insights' || activeTab === 'pro') && (
+        {activeTab === 'insights' && (
           <ProInsightsSection
             lat={location.lat}
             lon={location.lon}
             units={units}
+            weatherData={weatherQuery.data}
           />
         )}
 
@@ -133,6 +139,8 @@ function App() {
             lat={location.lat}
             lon={location.lon}
             units={units}
+            fallbackDaily={weatherQuery.data?.daily}
+            fallbackHourly={weatherQuery.data?.hourly}
           />
         )}
 

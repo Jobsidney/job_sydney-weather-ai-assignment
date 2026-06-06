@@ -602,14 +602,48 @@ body {
 }
 
 .hero-right__weather-icon {
-  width: min(220px, 50vw);
-  height: min(220px, 50vw);
-  object-fit: contain;
   position: relative;
   z-index: 1;
-  image-rendering: auto;
-  -webkit-backface-visibility: hidden;
-  transform: translateZ(0);
+}
+
+.weather-condition-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 0;
+  filter: drop-shadow(0 6px 14px rgba(37, 99, 235, 0.22));
+}
+
+.weather-condition-icon svg {
+  display: block;
+}
+
+.weather-condition-icon--sm {
+  filter: drop-shadow(0 3px 8px rgba(37, 99, 235, 0.18));
+}
+
+.weather-condition-icon--md {
+  filter: drop-shadow(0 4px 10px rgba(37, 99, 235, 0.2));
+}
+
+.weather-condition-icon--lg,
+.weather-condition-icon--xl {
+  filter: drop-shadow(0 10px 24px rgba(37, 99, 235, 0.28));
+}
+
+.weather-condition-icon--animated {
+  animation: weather-float 4.5s ease-in-out infinite;
+}
+
+@keyframes weather-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-8px);
+  }
 }
 
 @media (min-width: 1024px) {
@@ -677,14 +711,7 @@ body {
 }
 
 .hero-outlook-card__icon {
-  width: 40px;
-  height: 40px;
-  object-fit: contain;
   margin-top: auto;
-}
-
-.hero-outlook-card__icon--empty {
-  display: block;
 }
 
 @media (max-width: 767px) {
@@ -957,11 +984,176 @@ body {
   align-items: center;
   gap: 12px;
   padding: 14px 16px;
+}
+
+.daily-list__item {
   border-bottom: 1px solid var(--hero-divider);
 }
 
-.daily-row:last-child {
+.daily-list__item:last-child {
   border-bottom: none;
+}
+
+.daily-row__details {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+  padding: 0 16px 14px;
+}
+
+.daily-row__detail {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 12px;
+  color: var(--hero-text-muted);
+}
+
+.daily-row__detail strong {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--hero-text);
+}
+
+.forecast-daily-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.tonight-card__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 12px;
+}
+
+.tonight-card__title {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--hero-text);
+}
+
+.tonight-card__subtitle {
+  font-size: 13px;
+  color: var(--hero-text-muted);
+}
+
+.tonight-card__main {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.tonight-card__temp {
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--hero-temp);
+}
+
+.tonight-card__summary {
+  margin: 0 0 12px;
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--hero-text-muted);
+}
+
+.tonight-card__stats {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 14px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--nav-logo-accent);
+}
+
+.tonight-card__stat {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.tonight-card__details {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  padding-top: 14px;
+  border-top: 1px solid var(--hero-divider);
+}
+
+.tonight-card__detail {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 12px;
+  color: var(--hero-text-muted);
+}
+
+.tonight-card__detail strong {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--hero-text);
+}
+
+.popular-cities {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.popular-city {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 12px 10px;
+  border: 1px solid var(--hero-divider);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.45);
+  cursor: pointer;
+  font-family: inherit;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+
+.dark .popular-city {
+  background: rgba(15, 23, 42, 0.35);
+}
+
+.popular-city:hover,
+.popular-city--active {
+  border-color: var(--nav-logo-accent);
+  background: rgba(59, 130, 246, 0.1);
+}
+
+.popular-city__name {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--hero-text);
+}
+
+.popular-city__temp {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--hero-text);
+}
+
+.ai-summary-empty {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+@media (max-width: 768px) {
+  .popular-cities {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .daily-row__details,
+  .tonight-card__details {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 
 .daily-row:hover {

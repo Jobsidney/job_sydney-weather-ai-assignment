@@ -19,6 +19,9 @@ const currentSchema = z.object({
   icon_path: z.string().optional(),
   humidity: z.number().optional(),
   feels_like: z.number().optional(),
+  pressure_mb: z.number().optional(),
+  visibility_km: z.number().optional(),
+  uv_index: z.number().optional(),
 })
 
 const hourlySchema = z.object({

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { DEFAULT_CITY, type CityPreset } from '@/lib/constants'
 import { geoResponseToCityPreset } from '@/lib/geo-location'
+import { readLocationFromUrl, writeLocationToUrl } from '@/lib/location-url'
 import {
   hasInitializedLocation,
   loadSavedLocation,
@@ -11,10 +12,23 @@ import { useWeatherGeoQuery } from '@/hooks/useWeatherQuery'
 import { getWeatherByGeo } from '@/services/weather.service'
 import type { WeatherUnits } from '@/types/weather.schema'
 
+function resolveInitialLocation(): CityPreset {
+  return readLocationFromUrl() ?? loadSavedLocation() ?? DEFAULT_CITY
+}
+
 export function useLocationBootstrap(units: WeatherUnits) {
+  const urlLocation = readLocationFromUrl()
   const saved = loadSavedLocation()
-  const [location, setLocationState] = useState<CityPreset>(saved ?? DEFAULT_CITY)
-  const [detectGeo, setDetectGeo] = useState(!saved && !hasInitializedLocation())
+  const [location, setLocationState] = useState<CityPreset>(resolveInitialLocation)
+  const [detectGeo, setDetectGeo] = useState(
+    !urlLocation && !saved && !hasInitializedLocation(),
+  )
+
+  useEffect(() => {
+    if (!readLocationFromUrl()) {
+      writeLocationToUrl(location)
+    }
+  }, [])
 
   const geoQuery = useWeatherGeoQuery(
     { units, ai: false, days: 1, ip: 'auto' },
@@ -28,6 +42,7 @@ export function useLocationBootstrap(units: WeatherUnits) {
       const preset = geoResponseToCityPreset(geoQuery.data)
       setLocationState(preset)
       saveLocation(preset)
+      writeLocationToUrl(preset)
       setDetectGeo(false)
       return
     }
@@ -35,6 +50,7 @@ export function useLocationBootstrap(units: WeatherUnits) {
     if (geoQuery.isError) {
       markLocationInitialized()
       saveLocation(DEFAULT_CITY)
+      writeLocationToUrl(DEFAULT_CITY)
       setDetectGeo(false)
     }
   }, [detectGeo, geoQuery.data, geoQuery.isError])
@@ -42,6 +58,7 @@ export function useLocationBootstrap(units: WeatherUnits) {
   const setLocation = (next: CityPreset) => {
     setLocationState(next)
     saveLocation(next)
+    writeLocationToUrl(next)
     setDetectGeo(false)
   }
 
@@ -51,6 +68,7 @@ export function useLocationBootstrap(units: WeatherUnits) {
       const preset = geoResponseToCityPreset(data)
       setLocationState(preset)
       saveLocation(preset)
+      writeLocationToUrl(preset)
     } catch {
       // Keep the current location if geo detection fails.
     } finally {

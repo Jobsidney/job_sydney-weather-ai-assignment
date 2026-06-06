@@ -15,7 +15,9 @@ import {
   formatHighLow,
   formatObservedAt,
   formatPercent,
+  formatPressure,
   formatTemperatureValue,
+  formatVisibility,
   formatWindSpeed,
 } from '@/lib/formatters'
 import type {
@@ -76,7 +78,9 @@ export function CurrentConditions({
   const feelsLike = current.feels_like ?? current.temperature
   const precip = hour?.precipitation_probability ?? 0
   const humidity = current.humidity ?? hour?.humidity
-  const uvIndex = hour?.uv_index
+  const uvIndex = current.uv_index ?? hour?.uv_index
+  const pressure = current.pressure_mb
+  const visibility = current.visibility_km
 
   type DetailItem = {
     icon: typeof ArrowUp
@@ -113,7 +117,7 @@ export function CurrentConditions({
       {
         icon: Gauge,
         label: 'Pressure',
-        value: '1024 mb',
+        value: formatPressure(pressure),
       },
       {
         icon: Sun,
@@ -125,7 +129,7 @@ export function CurrentConditions({
       {
         icon: Eye,
         label: 'Visibility',
-        value: '10 km',
+        value: formatVisibility(visibility, units),
       },
       {
         icon: Moon,
