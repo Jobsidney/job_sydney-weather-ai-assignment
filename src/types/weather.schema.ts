@@ -74,13 +74,13 @@ export type HourlyForecast = z.infer<typeof hourlySchema>
 export type DailyForecast = z.infer<typeof dailySchema>
 
 export const weatherGeoResponseSchema = weatherResponseSchema.extend({
-  geo: z
+  ip_geo: z
     .object({
-      lat: z.number(),
-      lon: z.number(),
-      city: z.string().optional(),
-      region: z.string().optional(),
       country: z.string().optional(),
+      lat: z.number().optional(),
+      lon: z.number().optional(),
+      org: z.string().optional(),
+      source: z.string().optional(),
     })
     .optional(),
 })

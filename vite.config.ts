@@ -20,6 +20,14 @@ export default defineConfig(({ mode }) => {
     },
     server: {
       proxy: {
+        '/api/v1/search': {
+          target: 'https://geocoding-api.open-meteo.com',
+          changeOrigin: true,
+          rewrite: (requestPath) => {
+            const q = new URL(requestPath, 'http://localhost').searchParams.get('q') ?? ''
+            return `/v1/search?name=${encodeURIComponent(q)}&count=8&language=en`
+          },
+        },
         '/api': {
           target: 'https://api.weather-ai.co',
           changeOrigin: true,

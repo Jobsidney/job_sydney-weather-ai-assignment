@@ -1,4 +1,5 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node'
+import { fetchCitySearch } from '../server/geocode'
 
 const WEATHER_AI_BASE = 'https://api.weather-ai.co'
 
@@ -23,6 +24,18 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   }
 
   const targetPath = `/${segments.join('/')}`
+
+  if (targetPath === '/v1/search' && req.method === 'GET') {
+    const q = typeof req.query.q === 'string' ? req.query.q : ''
+    try {
+      const data = await fetchCitySearch(q)
+      res.status(200).json(data)
+    } catch {
+      res.status(502).json({ error: 'Failed to search locations' })
+    }
+    return
+  }
+
   const query = new URLSearchParams()
 
   for (const [key, value] of Object.entries(req.query)) {
