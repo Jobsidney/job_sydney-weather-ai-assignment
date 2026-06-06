@@ -1,7 +1,27 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node'
-import { fetchCitySearch } from '../server/geocode'
+import { fetchCitySearch } from './lib/geocode.js'
 
 const WEATHER_AI_BASE = 'https://api.weather-ai.co'
+
+function proxyBody(req: VercelRequest): RequestInit['body'] | undefined {
+  if (req.method === 'GET' || req.method === 'HEAD') {
+    return undefined
+  }
+
+  if (req.body == null || req.body === '') {
+    return undefined
+  }
+
+  if (typeof req.body === 'string') {
+    return req.body
+  }
+
+  if (Buffer.isBuffer(req.body)) {
+    return req.body
+  }
+
+  return JSON.stringify(req.body)
+}
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   const apiKey = process.env.API_KEY
@@ -60,10 +80,20 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       headers['X-Forwarded-For'] = forwardedFor
     }
 
+    const body = proxyBody(req)
+    if (
+      body &&
+      typeof body === 'string' &&
+      !headers['Content-Type'] &&
+      typeof req.headers['content-type'] === 'string'
+    ) {
+      headers['Content-Type'] = req.headers['content-type']
+    }
+
     const response = await fetch(targetUrl, {
       method: req.method,
       headers,
-      body: req.method === 'GET' || req.method === 'HEAD' ? undefined : req,
+      body,
     })
 
     const rateLimitHeaders = [
@@ -79,7 +109,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       }
     }
 
-    const body = await response.text()
+    const responseBody = await response.text()
     res.status(response.status)
 
     const contentType = response.headers.get('content-type')
@@ -87,7 +117,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       res.setHeader('Content-Type', contentType)
     }
 
-    res.send(body)
+    res.send(responseBody)
   } catch {
     res.status(502).json({ error: 'Failed to reach Weather-AI API' })
   }
