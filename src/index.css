@@ -1264,6 +1264,13 @@ body {
   padding: 8px 20px;
 }
 
+.insights-panel__source {
+  margin: 0 0 4px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--nav-logo-accent);
+}
+
 .insights-block {
   padding: 18px 0;
   border-bottom: 1px solid var(--hero-divider);
