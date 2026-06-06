@@ -1,0 +1,50 @@
+{
+  "clear_day": {
+    "condition_code": "0",
+    "icon": "https://cdn.weatherapi.com/weather/64x64/day/113.png",
+    "temperature_range": [18, 28],
+    "wind_range": [5, 12],
+    "humidity_range": [45, 65],
+    "ai_summary": "Beautiful clear skies with plenty of sunshine. Perfect weather for outdoor activities with comfortable temperatures and light winds."
+  },
+  "partly_cloudy": {
+    "condition_code": "1",
+    "icon": "https://cdn.weatherapi.com/weather/64x64/day/116.png",
+    "temperature_range": [12, 22],
+    "wind_range": [8, 15],
+    "humidity_range": [55, 75],
+    "ai_summary": "Partly cloudy conditions with occasional sunshine breaking through. Mild temperatures with moderate winds from the west."
+  },
+  "cloudy": {
+    "condition_code": "3",
+    "icon": "https://cdn.weatherapi.com/weather/64x64/day/122.png",
+    "temperature_range": [8, 16],
+    "wind_range": [10, 20],
+    "humidity_range": [70, 85],
+    "ai_summary": "Overcast skies dominate today with thick cloud cover. Cool temperatures and brisk winds make it feel quite chilly."
+  },
+  "light_rain": {
+    "condition_code": "61",
+    "icon": "https://cdn.weatherapi.com/weather/64x64/day/296.png",
+    "temperature_range": [10, 18],
+    "wind_range": [12, 22],
+    "humidity_range": [80, 95],
+    "ai_summary": "Light rain showers expected throughout the day. Bring an umbrella and dress warmly as temperatures remain cool."
+  },
+  "heavy_rain": {
+    "condition_code": "65",
+    "icon": "https://cdn.weatherapi.com/weather/64x64/day/308.png",
+    "temperature_range": [8, 14],
+    "wind_range": [15, 30],
+    "humidity_range": [85, 98],
+    "ai_summary": "Heavy rainfall with strong winds creating challenging conditions. Stay indoors if possible and avoid unnecessary travel."
+  },
+  "thunderstorm": {
+    "condition_code": "95",
+    "icon": "https://cdn.weatherapi.com/weather/64x64/day/389.png",
+    "temperature_range": [14, 20],
+    "wind_range": [20, 40],
+    "humidity_range": [75, 95],
+    "ai_summary": "Thunderstorms with lightning and heavy rain expected. Seek shelter immediately and avoid outdoor activities until conditions improve."
+  }
+}

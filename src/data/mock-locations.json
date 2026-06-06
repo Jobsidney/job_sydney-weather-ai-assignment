@@ -1,0 +1,86 @@
+{
+  "sydney": {
+    "location": {
+      "lat": -33.8688,
+      "lon": 151.2093,
+      "timezone": "Australia/Sydney"
+    },
+    "current": {
+      "time": "2026-06-06T18:00:00Z",
+      "temperature": 9,
+      "condition_code": "1",
+      "icon": "https://cdn.weatherapi.com/weather/64x64/day/116.png",
+      "wind_speed": 11,
+      "wind_direction": 177,
+      "humidity": 83,
+      "pressure": 1024,
+      "visibility": 10,
+      "uv_index": 0,
+      "feels_like": 6
+    },
+    "ai_summary": "Today's weather in Sydney is quite cool with partly cloudy skies and temperatures reaching a maximum of 9°C. It's a typical winter day with light winds from the south."
+  },
+  "melbourne": {
+    "location": {
+      "lat": -37.8136,
+      "lon": 144.9631,
+      "timezone": "Australia/Melbourne"
+    },
+    "current": {
+      "time": "2026-06-06T18:00:00Z",
+      "temperature": 7,
+      "condition_code": "3",
+      "icon": "https://cdn.weatherapi.com/weather/64x64/day/122.png",
+      "wind_speed": 15,
+      "wind_direction": 245,
+      "humidity": 78,
+      "pressure": 1018,
+      "visibility": 8,
+      "uv_index": 0,
+      "feels_like": 3
+    },
+    "ai_summary": "Melbourne is experiencing overcast conditions with cool temperatures of 7°C. Strong westerly winds are making it feel colder than the actual temperature."
+  },
+  "brisbane": {
+    "location": {
+      "lat": -27.4698,
+      "lon": 153.0251,
+      "timezone": "Australia/Brisbane"
+    },
+    "current": {
+      "time": "2026-06-06T18:00:00Z",
+      "temperature": 18,
+      "condition_code": "0",
+      "icon": "https://cdn.weatherapi.com/weather/64x64/day/113.png",
+      "wind_speed": 8,
+      "wind_direction": 85,
+      "humidity": 65,
+      "pressure": 1022,
+      "visibility": 15,
+      "uv_index": 2,
+      "feels_like": 19
+    },
+    "ai_summary": "Brisbane enjoys clear skies with pleasant 18°C temperatures. Light easterly winds and good visibility make for ideal winter weather."
+  },
+  "nairobi": {
+    "location": {
+      "lat": -1.2921,
+      "lon": 36.8219,
+      "timezone": "Africa/Nairobi"
+    },
+    "current": {
+      "time": "2026-06-06T18:00:00Z",
+      "temperature": 22,
+      "condition_code": "61",
+      "icon": "https://cdn.weatherapi.com/weather/64x64/day/296.png",
+      "wind_speed": 12,
+      "wind_direction": 120,
+      "humidity": 85,
+      "pressure": 1015,
+      "visibility": 6,
+      "uv_index": 1,
+      "feels_like": 24
+    },
+    "ai_summary": "Nairobi is experiencing light rain with temperatures at 22°C. High humidity and moderate winds are typical for this time of year."
+  }
+}
