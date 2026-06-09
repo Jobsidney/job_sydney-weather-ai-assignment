@@ -110,11 +110,11 @@ export function WeatherNav({
         </div>
 
         <div className="wnav__right">
-          <button type="button" className="wnav__text-action" onClick={onThemeToggle}>
+          <button type="button" className="wnav__text-action wnav__theme-toggle" onClick={onThemeToggle}>
             {theme === 'dark' ? <Sun strokeWidth={1.75} /> : <Moon strokeWidth={1.75} />}
             <span>{theme === 'dark' ? 'Light' : 'Dark'}</span>
           </button>
-          <button type="button" className="wnav__text-action">
+          <button type="button" className="wnav__text-action wnav__more-forecasts">
             <span>More Forecasts</span>
             <ChevronDown strokeWidth={1.75} className="wnav__text-action-caret" />
           </button>
@@ -128,9 +128,10 @@ export function WeatherNav({
           </button>
           <button
             type="button"
-            className="wnav__icon-btn"
+            className="wnav__icon-btn wnav__menu-btn"
             onClick={() => setMobileOpen(!mobileOpen)}
             aria-label="Toggle menu"
+            aria-expanded={mobileOpen}
           >
             {mobileOpen ? <X strokeWidth={2} /> : <Menu strokeWidth={2} />}
           </button>
@@ -160,42 +161,43 @@ export function WeatherNav({
       )}
 
       <div className="wnav__sub">
-        <div className="wnav__location">
-          <button 
-            type="button" 
+        <div className="wnav__sub-primary">
+          <button
+            type="button"
             className="wnav__location-name wnav__text-link"
             onClick={onLocationClick}
           >
             {locationName}
           </button>
-          <span className="wnav__location-sep">–</span>
+          <button
+            type="button"
+            className="wnav__units-btn"
+            onClick={onUnitsToggle}
+          >
+            <Globe strokeWidth={1.5} className="wnav__units-globe" />
+            <span>{countryCode} | {units === 'metric' ? '°C' : '°F'}</span>
+            <span className="wnav__units-caret">▾</span>
+          </button>
+        </div>
+
+        <div className="wnav__sub-meta">
           <span className="wnav__location-hint">
             Based on your internet address
           </span>
           <span className="wnav__location-sep">–</span>
           <button
             type="button"
-            className="wnav__text-link"
+            className="wnav__text-link wnav__geo-link"
             onClick={onGeoLocationClick}
             disabled={isDetectingLocation}
           >
             {isDetectingLocation ? 'Detecting…' : 'Use precise location'}
           </button>
           <span className="wnav__location-sep">–</span>
-          <button type="button" className="wnav__text-link">
+          <button type="button" className="wnav__text-link wnav__more-info">
             More information
           </button>
         </div>
-
-        <button
-          type="button"
-          className="wnav__units-btn"
-          onClick={onUnitsToggle}
-        >
-          <Globe strokeWidth={1.5} className="wnav__units-globe" />
-          <span>{countryCode} | {units === 'metric' ? '°C' : '°F'}</span>
-          <span className="wnav__units-caret">▾</span>
-        </button>
       </div>
     </nav>
   )
